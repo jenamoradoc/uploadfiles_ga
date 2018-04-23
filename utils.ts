@@ -10,12 +10,22 @@ const loadCollection = function (colName, db: Loki): Promise<Collection<any>> {
   });
 }
 
-const imageFilter = function(req, file, cb){
-  //acept image only
-  if (!file.originalName.match(/\.(jpg|jpeg|png|gif)$/)){
-      return cb(new Error('Only image files are allowed'), false);
-}
-cb(null, true);
+//Filtro para archivos
+const imageFilter = function (req, file, cb) {
+    // accept image only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
 };
 
-export { imageFilter, loadCollection}
+//=======Funcion para limpiar las imagenes subidas durante el Desarollo =======
+
+const cleanFolder = function (folderPath){
+
+   //borra los archivos pero no el folder
+   del.sync([`${folderPath}/**`, `!${folderPath}`]);
+}
+
+
+export { imageFilter, loadCollection, cleanFolder}
